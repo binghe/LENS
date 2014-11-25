@@ -315,7 +315,7 @@ function."
         (named-specifications-inheritance
          gates direct-superclasses 'module-class '%gatespec)))
 
-(defmethod sb-mop:validate-superclass ((class module-class)
+(defmethod validate-superclass ((class module-class)
                                        superclass)
   (typep superclass '(or standard-class parameter-class)))
 
@@ -578,7 +578,7 @@ after their type name. The =:owner= keyword argument will be added
 with the current object instance as the argument.
 "))
 
-(defmethod sb-mop:validate-superclass ((class compound-module-class)
+(defmethod validate-superclass ((class compound-module-class)
                                        superclass )
   (typep superclass '(or standard-class parameter-class module-class)))
 

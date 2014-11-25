@@ -223,7 +223,7 @@ it is a parameter direct slot"
       (find-class 'parameter-direct-slot-definition)
       (call-next-method)))
 
-(defmethod sb-pcl::compute-effective-slot-definition-initargs
+(defmethod closer-mop::compute-effective-slot-definition-initargs
     ((class parameter-class) direct-slot-definitions)
   "Only if the highest priority direct slot is a parameter slot do we
 need any parameter initargs - they aren't inherited."
@@ -255,7 +255,7 @@ need any parameter initargs - they aren't inherited."
            (find-class 'parameter-effective-slot-definition))
        (call-next-method)))
 
-(defmethod sb-mop:validate-superclass ((class parameter-class)
+(defmethod validate-superclass ((class parameter-class)
                                        (superclass standard-class))
   t)
 

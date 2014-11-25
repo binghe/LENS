@@ -61,6 +61,7 @@ the whole network is created.")
                  #:peek #:make-queue #:back)
   (:shadow duration)
   (:export
+
    ;; common
    #:coord #:make-coord #:coord-x #:coord-y #:coord-z
    #:coord+ #:coord- #:coord* #:coord-op #:distance
@@ -70,14 +71,17 @@ the whole network is created.")
    #:timestamped-queue #:packet-buffer
    #:buffer-size #:buffer-size-bytes #:empty-p
    #:history-buffer #:duplicate-p
+
    ;; common object
    #:+c+ #:*context* #:simulation-condition #:name #:owner
    #:named-object #:owned-object #:index #:parent-module #:full-name #:full-path
    #:for-each-child #:info #:detailed-info #:duplicate #:serialise #:find-object
    #:property-union #:initialize #:initialized-p #:finish
+
    ;; parameters and configuration
    #:read-configuration #:format-from-type #:read-parameter
    #:parameter-class #:parameter-object #:configure #:number-or-expression
+
    ;; simulation kernel
    #:*simulation* #:*simulation-init-hooks* #:*time-format* #:time-type #:sec
    #:configuration #:simulation #:network #:sim-time-limit #:cpu-time-limit
@@ -90,9 +94,11 @@ the whole network is created.")
    #:register-signal #:signal-id #:receive-signal #:entity-with-signals
    #:listeners #:may-have-listeners #:has-listeners #:emit
    #:subscribe #:unsubscribe  #:subscribed-p #:repair-signal-flags
+
    ;; common signals
    #:pre-model-change #:post-model-change #:message-sent #:message-discarded
    #:drop #:buffer-length #:buffer-time
+
   ;; components: modules,gates and channels
    #:gate #:gate-direction #:gate-slot #:input #:output #:gate-extend
    #:gate-size #:size #:end-module
@@ -108,6 +114,7 @@ the whole network is created.")
    #:build-gates #:build-submodules #:build-connections #:build-inside
    #:arrived #:for-each-gate #:for-each-submodule #:for-each-channel
    #:submodule #:schedule-at #:send #:send-direct #:<= #:=> #:<=>
+
    ;; RNG
    #:uint #:rand #:urandom #:mt-random-state #:seed #:rng-map
    #:uniform #:exponential #:normal #:lognormal #:truncnormal #:gamma-d #:beta
@@ -115,6 +122,7 @@ the whole network is created.")
    #:chi-square #:student-t #:cauchy #:triang #:weibull #:pareto-shifted
    #:intuniform #:bernoulli #:binomial #:geometric #:negbinomial #:poisson
    #:do-histogram
+
    ;; model change notifications
    #:module-add-notification #:module-delete-notification
    #:module-reparent-notification #:gate-add-notification
@@ -122,15 +130,18 @@ the whole network is created.")
    #:gate-connect-notification #:gate-disconnect-notification
    #:path-create-notification #:path-cut-notification
    #:parameter-change-notification
+
    ;; messages and packets
    #:message #:creation-time #:to-gate #:from-gate #:to-module #:from-module
-   #:timestamp #: #:handle-message #:send-message #:self-message-p
+   #:timestamp #:handle-message #:send-message #:self-message-p
    #:packet #:bit-length #:byte-length
    #:duration #:control-info #:bit-error-p #:header-specification
    #:unknown-message #:encapsulate #:decapsulate
+
    ;; timers
    #:with-timers #:timer-message #:timer #:set-timer #:cancel-timer
    #:handle-timer
+
    ;; statistics layer
    #:define-statistic-filter #:define-result-recorder #:record #:report
    #:title

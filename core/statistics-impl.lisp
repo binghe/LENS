@@ -88,9 +88,15 @@
   "Return the maximum value received so far."
   (when (or (not max) (> value max)) (setf max value)))
 
-(define-statistic-filter constant0(value) "Always return 0" 0)
+(define-statistic-filter constant0(value)
+  "Always return 0"
+  (declare (ignore value))
+  0)
 
-(define-statistic-filter constant1(value) "Always return 1" 1)
+(define-statistic-filter constant1(value)
+  "Always return 1"
+  (declare (ignore value))
+  1)
 
 (defclass count-recorder(scalar-recorder)
   ((count :accessor recorded-value :initform 0))
@@ -396,6 +402,7 @@ or the *overflow* *cell* is incremented."))
   (assert (not (histogram-transformed-p instance)))
   (with-slots(range-min range-max range-ext-factor cell-size array mode)
       instance
+    (declare (ignore cell-size))
     (let* ((firstvals array)
            (min (reduce #'min firstvals))
            (max (reduce #'max firstvals)))
@@ -572,6 +579,7 @@ or the *overflow* *cell* is incremented."))
 
 (defmethod recorded-value((r accumulated-time-recorder))
   (with-slots(last-time state accumulated-time fractional) r
+    (declare (ignore last-time state))
     (if fractional
         (/ accumulated-time (simulation-time))
         accumulated-time)))

@@ -90,7 +90,11 @@ termination time beforer any calls to [[report]]"))
   "Mapping between statistic recorder recorder name and the
   implementation classes defined using [[define-result-recorder]]")
 
-(defmacro define-statistic-filter(name (var &rest statevars) &body body)
+(defun declare-p (form)
+  "Test if the form is a function declaration"
+  (and (consp form) (eq 'declare (car form))))
+
+(defmacro define-statistic-filter (name (var &rest statevars) &body body)
   "* Arguments
 
 - name :: a =symbol= (evaluated)
@@ -113,16 +117,22 @@ filtering.
 ;;;   (incf count))
 
 "
-  (eval-when(:load-toplevel :execute)
-    (setf
-     (gethash name *statistic-filter-generators*)
-    (function (lambda()
-      (eval
-      `(let (,@statevars)
-          (function (lambda(,var)
-            ,(when (stringp (first body)) (first body))
-            (or (progn ,@(if (stringp (first body)) (rest body) body))
-                (throw 'filter-abort ,name)))))))))))
+  (let ((filter-name (intern (format nil "STATISTIC-FILTER-~a" name))))
+    `(progn
+       (defun ,filter-name ()
+         (let (,@statevars)
+           #'(lambda (,var)
+               ,(when (stringp (first body)) (first body))
+               ,@(when (declare-p (second body)) `(,(second body)))
+               (or (progn ,@(if (stringp (first body))
+                                (if (declare-p (second body))
+                                    (rest (cdr body))
+                                  (rest body))
+                              body))
+                   (throw 'filter-abort ',name)))))
+       (eval-when (:load-toplevel :execute)
+         (setf (gethash ',name *statistic-filter-generators*)
+               #',filter-name)))))
 
 (defun make-statistic-filter(name)
   (let ((f (gethash name *statistic-filter-generators*)))
